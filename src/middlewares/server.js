@@ -13,7 +13,7 @@ export default store => next => action => {
                 payload: {active: null, sum: null}
             };
 
-        setTimeout(function () {
+        setTimeout(() => {
             store.dispatch(eventAction)
         }, eventTime)
     }
