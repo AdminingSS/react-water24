@@ -78,9 +78,6 @@ class LoginForm extends Component {
         changeScreen('balance');
 
         setLoader(true);
-        setTimeout(() => {
-            setLoader(false);
-        }, 3000)
     }
 }
 

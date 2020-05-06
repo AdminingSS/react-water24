@@ -220,10 +220,6 @@ class BalanceMain extends Component {
 
         setMessage(2, balanceSum);
 
-        setTimeout(() => {
-            setMessage(null);
-        }, 5000);
-
     };
 
     handleSubscriptionInput = e => {
@@ -252,10 +248,6 @@ class BalanceMain extends Component {
         this.setState({subscriptionInput: ''});
 
         setMessage(messageActive, messageData);
-
-        setTimeout(() => {
-            setMessage(null);
-        }, 5000);
     };
 }
 

@@ -1,8 +1,9 @@
 import {createStore, applyMiddleware} from 'redux';
 import reducer from '../reducer';
 import viewport from '../middlewares/viewport';
+import server from '../middlewares/server';
 
-const enhancer = applyMiddleware(viewport);
+const enhancer = applyMiddleware(viewport, server);
 
 const store = createStore(reducer, {}, enhancer);
 

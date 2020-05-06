@@ -76,9 +76,6 @@ class Navbar extends Component {
         else changeScreen(newScreen);
 
         setLoader(true);
-        setTimeout(() => {
-            setLoader(false);
-        }, 3000)
     }
 }
 
