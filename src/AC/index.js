@@ -44,10 +44,10 @@ export function changeSubscription(sum) {
     }
 }
 
-export function updateBalanceHistory(obj) {
+export function updateBalanceHistory(historyItem) {
     return {
         type: UPDATE_BALANCE_HISTORY,
-        payload: {obj}
+        payload: {historyItem}
     }
 }
 
@@ -58,10 +58,10 @@ export function setLoader(shown) {
     }
 }
 
-export function setMessage(active, data = null) {
+export function setMessage(active, sum = null) {
     return {
         type: SET_MESSAGE,
-        payload: {active, data}
+        payload: {active, sum}
     }
 }
 

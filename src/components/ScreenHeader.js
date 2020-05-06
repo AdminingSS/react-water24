@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 import logoMain from '../assets/images/logo-main.svg';
-import AuthController from "./AuthController";
+import AuthController from "./LoginForm";
 
 class ScreenHeader extends Component {
     render() {

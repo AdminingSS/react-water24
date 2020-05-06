@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 import {authenticateUser, changeScreen, setLoader} from '../AC';
 
-class AuthController extends Component {
+class LoginForm extends Component {
     state = {
         login: '',
         password: ''
@@ -14,7 +14,7 @@ class AuthController extends Component {
             <div>
                 <h3>Для пополнения аква-счета введите номер телефона:</h3>
                 <input className="uk-input js-phone" type="text" placeholder="+7 (___) ___ - ____"
-                       value={this.getValue()} onChange={this.handleChange('login')}/>
+                       value={this.getLoginValue()} onChange={this.handleChange('login')}/>
                 <input className="uk-input js-password" type="text" placeholder="Ваш пароль" value={this.state.password}
                        onChange={this.handleChange('password')}/>
                 <button className="uk-button uk-button-primary js-auth" onClick={this.handleSubmit}>Войти</button>
@@ -22,13 +22,13 @@ class AuthController extends Component {
         );
     }
 
-    getValue = () => {
+    getLoginValue = () => {
         const value = this.state.login;
         if(!value.length) return value;
 
-        const firstPart = '+7 (' + value.substring(0,3);
-        const secondPart = (value.length > 3) ? ') ' + value.substring(3,6) : '';
-        const lastPart = (value.length > 6) ? ' - ' + value.substring(6) : '';
+        const firstPart = '+7 (' + value.slice(0,3);
+        const secondPart = (value.length > 3) ? ') ' + value.slice(3,6) : '';
+        const lastPart = (value.length > 6) ? ' - ' + value.slice(6) : '';
 
         const newValue = firstPart + secondPart + lastPart;
 
@@ -43,9 +43,7 @@ class AuthController extends Component {
             const oldValue = this.state[input];
             let newValue;
 
-            if(!oldValue) {
-                newValue = value.replace(/[-()\s]/g, '');
-            }
+            if(!oldValue) newValue = value.replace(/[-()\s]/g, '');
             else newValue = value.slice(2).replace(/[-()\s]/g, '');
 
             if (newValue.length > 10 || (!newValue.match(/^\d+$/) && newValue.length)) return;
@@ -76,10 +74,10 @@ class AuthController extends Component {
     }
 }
 
-AuthController.propTypes = {
+LoginForm.propTypes = {
     //from connect
     authenticateUser: PropTypes.func.isRequired,
     changeScreen: PropTypes.func.isRequired
 };
 
-export default connect(null, {authenticateUser, changeScreen, setLoader})(AuthController);
+export default connect(null, {authenticateUser, changeScreen, setLoader})(LoginForm);

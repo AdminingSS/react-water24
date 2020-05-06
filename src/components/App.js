@@ -6,9 +6,19 @@ import Navbar from './Navbar';
 import Message from './Message';
 import {connect} from 'react-redux';
 import ViewportController from './ViewportController';
-import Loader from "./Loader";
+import Loader from './Loader';
+import {getScreen} from '../selectors';
 
 class App extends Component {
+
+    static propTypes = {
+        //from connect
+        activeScreen: PropTypes.string.isRequired
+    };
+
+    static defaultProps = {
+        activeScreen: 'map'
+    }
 
     state = {
         loading: false
@@ -45,11 +55,6 @@ class App extends Component {
     }
 }
 
-App.propTypes = {
-    //from connect
-    activeScreen: PropTypes.string.isRequired
-};
-
-export default connect((state) => ({
-    activeScreen: state.screen
+export default connect((state, ownProps) => ({
+    activeScreen: ownProps.activeScreen
 }), null)(App)

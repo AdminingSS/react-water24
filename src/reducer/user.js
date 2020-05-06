@@ -38,7 +38,7 @@ export default ( user =  userDefaultState, action) => {
         case CHANGE_SUBSCRIPTION:
             return {...user, subscription: payload.sum};
         case UPDATE_BALANCE_HISTORY:
-            return {...user, history: [].concat(payload.obj,user.history)}
+            return {...user, history: [].concat(payload.historyItem,user.history)}
     }
 
     return user
