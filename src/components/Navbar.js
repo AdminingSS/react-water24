@@ -3,8 +3,17 @@ import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 import {changeScreen, setLoader} from "../AC";
 import classNames from 'classnames';
+import {getScreen, getUserStatus} from "../selectors";
 
 class Navbar extends Component {
+
+    static propTypes = {
+        //from connect
+        activeScreen: PropTypes.string.isRequired,
+        userStatus: PropTypes.string,
+        changeScreen: PropTypes.func.isRequired,
+        setLoader: PropTypes.func.isRequired
+    };
 
     render() {
         const {activeScreen} = this.props;
@@ -73,14 +82,16 @@ class Navbar extends Component {
     }
 }
 
-Navbar.propTypes = {
-    //from connect
-    activeScreen: PropTypes.string.isRequired,
-    userStatus: PropTypes.string,
-    changeScreen: PropTypes.func.isRequired
+const mapStateToProps = state => {
+    return {
+        activeScreen: getScreen(state),
+        userStatus: getUserStatus(state),
+    };
 };
 
-export default connect((state) => ({
-    activeScreen: state.screen,
-    userStatus: state.user.status
-}), {changeScreen, setLoader})(Navbar)
+const mapDispatchToProps = dispatch => ({
+    changeScreen: screenName => dispatch(changeScreen(screenName)),
+    setLoader: (shown) => dispatch(setLoader(shown))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar)

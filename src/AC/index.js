@@ -16,10 +16,9 @@ export function changeScreen(screenName) {
     }
 }
 
-export function resizeViewport(newWidth) {
+export function resizeViewport() {
     return {
-        type: RESIZE_VIEWPORT,
-        payload: {newWidth}
+        type: RESIZE_VIEWPORT
     }
 }
 

@@ -13,3 +13,5 @@ export const UPDATE_BALANCE_HISTORY = 'UPDATE_BALANCE_HISTORY';
 export const SET_LOADER = 'SET_LOADER';
 
 export const SET_MESSAGE = 'SET_MESSAGE';
+
+export const DESKTOP_WIDTH = 767;

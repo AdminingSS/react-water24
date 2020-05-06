@@ -2,6 +2,12 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 class ModalOffers extends Component {
+
+    static propTypes = {
+        number: PropTypes.number,
+        closeModal: PropTypes.func.isRequired
+    };
+
     render() {
         const {number, closeModal} = this.props;
         if (!number) return null;
@@ -58,7 +64,5 @@ class ModalOffers extends Component {
         closeModal();
     }
 }
-
-ModalOffers.propTypes = {};
 
 export default ModalOffers;

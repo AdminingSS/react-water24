@@ -1,28 +1,11 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import Screen from './Screen';
 import Navbar from './Navbar';
 import Message from './Message';
-import {connect} from 'react-redux';
 import ViewportController from './ViewportController';
 import Loader from './Loader';
-import {getScreen} from '../selectors';
 
 class App extends Component {
-
-    static propTypes = {
-        //from connect
-        activeScreen: PropTypes.string.isRequired
-    };
-
-    static defaultProps = {
-        activeScreen: 'map'
-    }
-
-    state = {
-        loading: false
-    };
 
     render() {
         return (
@@ -31,13 +14,13 @@ class App extends Component {
                 <div className="uk-offcanvas-content">
                     <div
                         className="uk-child-width-1-1 uk-height-viewport uk-position-relative uk-flex uk-flex-wrap uk-flex-wrap-between">
-                        <Screen className = {classNames('tm-screen', [`tm-${this.props.activeScreen}`])} />
+                        <Screen />
                         <Loader />
                         <footer>
                             <Navbar />
                         </footer>
                     </div>
-                    <div id="offcanvas-overlay" uk-offcanvas="mode: push; overlay: true">
+                    <div id="offcanvas-overlay" data-uk-offcanvas="mode: push; overlay: true">
                         <div className="uk-offcanvas-bar">
                             <button className="uk-offcanvas-close" type="button" data-uk-close />
 
@@ -55,6 +38,4 @@ class App extends Component {
     }
 }
 
-export default connect((state, ownProps) => ({
-    activeScreen: ownProps.activeScreen
-}), null)(App)
+export default App

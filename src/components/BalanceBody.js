@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import BalanceMain from "./BalanceMain";
 import BalanceOperator from "./BalanceOperator";
 
@@ -10,18 +9,17 @@ class BalanceBody extends Component {
     };
 
     render() {
+        const {activePage} = this.state;
 
-        if(this.state.activePage === 'operator') return <BalanceOperator changePage = {this.changePage} />;
-
-        return <BalanceMain changePage = {this.changePage} />;
-
+        return (activePage === 'operator') ?
+            <BalanceOperator changePage = {this.changePage} />
+            :
+            <BalanceMain changePage = {this.changePage} />
     }
 
     changePage = page => e => {
         this.setState({activePage: page})
     }
 }
-
-BalanceBody.propTypes = {};
 
 export default BalanceBody;

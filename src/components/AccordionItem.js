@@ -2,8 +2,20 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 class AccordionItem extends Component {
+
+    static propTypes = {
+        title: PropTypes.string.isRequired,
+        items: PropTypes.array.isRequired,
+        isOpen: PropTypes.bool
+    };
+
+    static defaultProps = {
+        isOpen: false
+    };
+
     render() {
-        const {title, items, className} = this.props;
+        const {title, items, isOpen} = this.props;
+        const className = (isOpen) ? 'uk-open' : '';
 
         return (
             <div className={"tm-accordion-item " + className}>
@@ -17,7 +29,5 @@ class AccordionItem extends Component {
         );
     }
 }
-
-AccordionItem.propTypes = {};
 
 export default AccordionItem;

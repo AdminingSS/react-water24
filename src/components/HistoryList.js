@@ -2,8 +2,14 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 import HistoryItem from './HistoryItem';
+import {getUserHistory} from "../selectors";
 
 class HistoryList extends Component {
+
+    static propTypes = {
+        //from connect
+        history: PropTypes.array.isRequired
+    };
 
     state = {
         itemsToShow: (this.props.history.length >= 5) ? 5 : this.props.history.length
@@ -37,8 +43,10 @@ class HistoryList extends Component {
     }
 }
 
-HistoryList.propTypes = {};
+const mapStateToProps = state => {
+    return {
+        history: getUserHistory(state)
+    };
+};
 
-export default connect((state) => ({
-    history: state.user.history
-}), null)(HistoryList);
+export default connect(mapStateToProps)(HistoryList);

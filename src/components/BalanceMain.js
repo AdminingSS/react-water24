@@ -6,8 +6,23 @@ import {connect} from "react-redux";
 import {changeBalance, changeSubscription, setMessage, updateBalanceHistory} from "../AC";
 import classNames from 'classnames';
 import HistoryList from "./HistoryList";
+import {isNumeric} from "../helpers";
+import {getUserBalance, getUserSubscription, getUserHistory} from "../selectors";
 
 class BalanceMain extends Component {
+
+    static propTypes = {
+        changePage: PropTypes.func.isRequired,
+        //from connect
+        balance: PropTypes.number.isRequired,
+        subscription: PropTypes.number.isRequired,
+        history: PropTypes.array.isRequired,
+        changeBalance: PropTypes.func.isRequired,
+        changeSubscription: PropTypes.func.isRequired,
+        updateBalanceHistory: PropTypes.func.isRequired,
+        setMessage: PropTypes.func.isRequired
+    };
+
     state = {
         tabActive: 1,
         balanceInput: '',
@@ -88,12 +103,11 @@ class BalanceMain extends Component {
     }
 
     handleTabChange = tab => e => {
-
         this.setState({tabActive: tab})
     };
 
     getTab() {
-        const {tabActive} = this.state;
+        const {tabActive, balanceInput, subscriptionInput} = this.state;
         const {subscription} = this.props;
 
         switch (tabActive) {
@@ -127,7 +141,7 @@ class BalanceMain extends Component {
                                         </a>
                                     </div>
                                     <div className="uk-width-1-1">
-                                        <input className="uk-input" type="text" placeholder="Введите вашу сумму" value={this.state.balanceInput} onChange={this.handleBalanceInput}/>
+                                        <input className="uk-input" type="text" placeholder="Введите вашу сумму" value={balanceInput} onChange={this.handleBalanceInput}/>
                                     </div>
                                 </div>
                                 <button className="uk-button uk-button-primary js-balance-add" onClick={this.handleBalanceSubmit}>Пополнить баланс</button>
@@ -148,7 +162,7 @@ class BalanceMain extends Component {
                                 <h3>Введите сумму, которая ежемесячно 1-го числа будет зачисляться на ваш баланс</h3>
                                 <div className="tm-subscription-buttons uk-child-width-1-2 uk-grid-small" data-uk-grid>
                                     <div className="uk-width-1-1">
-                                        <input className="uk-input" type="text" placeholder="Сумма подписки" value={this.state.subscriptionInput} onChange={this.handleSubscriptionInput}/>
+                                        <input className="uk-input" type="text" placeholder="Сумма подписки" value={subscriptionInput} onChange={this.handleSubscriptionInput}/>
                                     </div>
                                 </div>
                                 <button className="uk-button uk-button-primary js-subscription-add" onClick={this.handleSubscriptionSubmit()}>Обновить подписку
@@ -178,7 +192,7 @@ class BalanceMain extends Component {
     handleBalanceInput = e => {
         const value = e.target.value;
 
-        if(!value.match(/^\d+$/) && value.length) return;
+        if(!isNumeric(value) && value.length) return;
 
         this.setState({balanceInput: value})
     };
@@ -215,7 +229,7 @@ class BalanceMain extends Component {
     handleSubscriptionInput = e => {
         const value = e.target.value;
 
-        if(!value.match(/^\d+$/) && value.length) return;
+        if(!isNumeric(value) && value.length) return;
 
         this.setState({subscriptionInput: value})
     };
@@ -245,10 +259,20 @@ class BalanceMain extends Component {
     };
 }
 
-BalanceMain.propTypes = {};
+const mapStateToProps = state => {
+    return {
+        balance: getUserBalance(state),
+        subscription: getUserSubscription(state),
+        history: getUserHistory(state)
+    };
+};
 
-export default connect((state) => ({
-    balance: state.user.balance,
-    subscription: state.user.subscription,
-    history: state.user.history
-}), {changeBalance, changeSubscription, updateBalanceHistory, setMessage})(BalanceMain);
+const mapDispatchToProps = dispatch => ({
+    changeBalance: sum => dispatch(changeBalance(sum)),
+    changeSubscription: sum => dispatch(changeSubscription(sum)),
+    updateBalanceHistory: historyItem => dispatch(updateBalanceHistory(historyItem)),
+    setMessage: (active, sum) => dispatch(setMessage(active, sum))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(BalanceMain);
+

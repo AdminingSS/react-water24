@@ -1,10 +1,14 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from "react-redux";
 import logoMain from '../assets/images/logo-main.svg';
-import AuthController from "./LoginForm";
+import LoginForm from "./LoginForm";
 
 class ScreenHeader extends Component {
+
+    static propTypes = {
+        activeScreen: PropTypes.string.isRequired
+    };
+
     render() {
         const {activeScreen} = this.props;
 
@@ -16,7 +20,7 @@ class ScreenHeader extends Component {
                             <img src={logoMain} alt="" />
                         </div>
                         <h2 className="tm-screen-name">Аква-счет</h2>
-                        <AuthController />
+                        <LoginForm />
                     </div>
                 </header>
             )
@@ -37,11 +41,4 @@ class ScreenHeader extends Component {
     }
 }
 
-ScreenHeader.propTypes = {
-    //from connect
-    activeScreen: PropTypes.string.isRequired
-};
-
-export default connect((state) => ({
-    activeScreen: state.screen
-}), null)(ScreenHeader);
+export default ScreenHeader;

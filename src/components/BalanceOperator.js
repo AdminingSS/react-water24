@@ -8,6 +8,10 @@ import NewsList from './NewsList';
 
 class BalanceOperator extends Component {
 
+    static propTypes = {
+        changePage: PropTypes.func.isRequired
+    };
+
     state = {
         tabActive: 1,
         modalOpen: null,
@@ -16,7 +20,7 @@ class BalanceOperator extends Component {
 
     render() {
         const {changePage} = this.props;
-        const {tabActive} = this.state;
+        const {tabActive, modalOpen} = this.state;
 
         return (
             <div>
@@ -65,7 +69,7 @@ class BalanceOperator extends Component {
 
                     {this.getTab()}
 
-                    <ModalNews id={this.state.modalOpen} closeModal={this.closeModal} />
+                    <ModalNews id={modalOpen} closeModal={this.closeModal} />
 
                 </div>
             </div>
@@ -77,7 +81,7 @@ class BalanceOperator extends Component {
     };
 
     getTab() {
-        const {tabActive} = this.state;
+        const {tabActive, newsShown} = this.state;
 
         switch (tabActive) {
             case 1:
@@ -159,7 +163,7 @@ class BalanceOperator extends Component {
                             <NewsList type = "pinned" handleClick = {this.handleClick} />
                         </div>
                         <div className="uk-container">
-                            <NewsList type = "all" show = {this.state.newsShown} handleClick = {this.handleClick} />
+                            <NewsList type = "all" show = {newsShown} handleClick = {this.handleClick} />
                         </div>
                         <div className="uk-container uk-text-center">
                             <button className="uk-button uk-button-primary uk-margin-bottom js-news-more" onClick={this.handleShowMore}>Загрузить
@@ -187,7 +191,5 @@ class BalanceOperator extends Component {
         this.setState({newsShown: showNews})
     }
 }
-
-BalanceOperator.propTypes = {};
 
 export default BalanceOperator;

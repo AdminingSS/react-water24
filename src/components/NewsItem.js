@@ -1,8 +1,17 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from "react-redux";
+import {getNewsItem} from "../selectors";
 
 class NewsItem extends Component {
+
+    static propTypes = {
+        id: PropTypes.number.isRequired,
+        handleClick: PropTypes.func.isRequired,
+        //from connect
+        newsItem: PropTypes.object.isRequired
+    };
+
     render() {
         const {handleClick, newsItem, id} = this.props;
 
@@ -26,8 +35,10 @@ class NewsItem extends Component {
     }
 }
 
-NewsItem.propTypes = {};
+const mapStateToProps = (state, ownProps) => {
+    return {
+        newsItem: getNewsItem(state, ownProps)
+    };
+};
 
-export default connect((state, ownProps) => ({
-    newsItem: state.news.news.filter(item => item.id === ownProps.id)[0]
-}), null )(NewsItem);
+export default connect(mapStateToProps)(NewsItem);

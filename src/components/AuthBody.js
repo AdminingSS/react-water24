@@ -3,8 +3,15 @@ import PropTypes from 'prop-types';
 import AccordionDesktop from './AccordionDesktop';
 import AccordionMobile from './AccordionMobile';
 import {connect} from "react-redux";
+import {getAccordionContent, getDevice} from '../selectors';
 
 class AuthBody extends Component {
+
+    static propTypes = {
+        content: PropTypes.array.isRequired,
+        isDesktop: PropTypes.bool.isRequired
+    };
+
     render() {
         return (
             <div className="uk-section">
@@ -16,22 +23,20 @@ class AuthBody extends Component {
     }
 
     getAccordion() {
-        const {content, viewportWidth} = this.props;
+        const {content, isDesktop} = this.props;
 
-        if(viewportWidth > 767) {
-            return <AccordionDesktop content = {content} />
-        }
-
-        return <AccordionMobile content = {content} />
+        return (isDesktop) ?
+            <AccordionDesktop content = {content} />
+            :
+            <AccordionMobile content = {content} />
     }
 }
 
-AuthBody.propTypes = {
-    content: PropTypes.array.isRequired,
-    viewportWidth: PropTypes.number.isRequired
+const mapStateToProps = state => {
+    return {
+        content: getAccordionContent(state),
+        isDesktop: getDevice(state)
+    };
 };
 
-export default connect((state) => ({
-    content: state.accordions.auth,
-    viewportWidth: state.viewport.width
-}), null)(AuthBody);
+export default connect(mapStateToProps)(AuthBody);

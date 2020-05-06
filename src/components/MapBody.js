@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import GoogleMapReact from 'google-map-react';
 
 class MapBody extends Component {
@@ -52,7 +51,6 @@ class MapBody extends Component {
     };
 
     handleApiLoaded = (map, maps) => {
-// The location of Moscow
 
         var geocoder = new maps.Geocoder;
         var infoWindow = new maps.InfoWindow;
@@ -73,7 +71,6 @@ class MapBody extends Component {
             });
         }
 
-        // The marker, positioned at Moscow
         const marker = new maps.Marker({position: map.getCenter(), map: map});
 
         this.setState({
@@ -110,7 +107,5 @@ class MapBody extends Component {
         });
     }
 }
-
-MapBody.propTypes = {};
 
 export default MapBody;

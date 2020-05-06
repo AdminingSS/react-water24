@@ -5,6 +5,11 @@ import {resizeViewport} from "../AC";
 
 class ViewportController extends Component {
 
+    static propTypes = {
+        //from connect
+        resizeViewport: PropTypes.func.isRequired
+    };
+
     render() {
         return null;
     }
@@ -19,15 +24,14 @@ class ViewportController extends Component {
 
     handleResize = () => {
         const {resizeViewport} = this.props;
-        const newWidth = window.innerWidth;
+        //const newWidth = window.innerWidth;
 
-        resizeViewport(newWidth);
+        resizeViewport();
     }
 }
 
-ViewportController.propTypes = {
-    //from connect
-    resizeViewport: PropTypes.func.isRequired
-};
+const mapDispatchToProps = dispatch => ({
+    resizeViewport: () => dispatch(resizeViewport())
+});
 
-export default connect(null, { resizeViewport })(ViewportController);
+export default connect(null, mapDispatchToProps)(ViewportController);

@@ -1,15 +1,24 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from "react-redux";
+import {getLoaderShown} from "../selectors";
 
 class Loader extends Component {
+
+    static propTypes = {
+        loaderShown: PropTypes.bool.isRequired
+    };
+
     render() {
-        if(!this.props.loaderShown) return null;
+        const {loaderShown} = this.props;
+
+        if(!loaderShown) return null;
+
         return (
             <div className="tm-swapper-holder">
                 <div className="tm-swapper">
                     <div className="tm-animated-logo-wrapper">
-                        <div className="tm-animated-logo"></div>
+                        <div className="tm-animated-logo" />
                     </div>
                 </div>
             </div>
@@ -17,8 +26,10 @@ class Loader extends Component {
     }
 }
 
-Loader.propTypes = {};
+const mapStateToProps = state => {
+    return {
+        loaderShown: getLoaderShown(state)
+    };
+};
 
-export default connect((state) => ({
-    loaderShown: state.system.loaderShown
-}), null)(Loader);
+export default connect(mapStateToProps)(Loader);

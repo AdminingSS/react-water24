@@ -1,8 +1,15 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from "react-redux";
+import {getMessageActive, getMessageData} from "../selectors";
 
 class Message extends Component {
+
+    static propTypes = {
+        messageActive: PropTypes.number,
+        messageData: PropTypes.number
+    };
+
     render() {
         const {messageActive, messageData} = this.props;
         if(!messageActive) return null;
@@ -41,9 +48,11 @@ class Message extends Component {
     }
 }
 
-Message.propTypes = {};
+const mapStateToProps = state => {
+    return {
+        messageActive: getMessageActive(state),
+        messageData: getMessageData(state)
+    };
+};
 
-export default connect((state) => ({
-    messageActive: state.system.messageActive,
-    messageData: state.system.messageData
-}), null)(Message);
+export default connect(mapStateToProps)(Message);

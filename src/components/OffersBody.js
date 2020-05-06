@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import ModalOffers from './ModalOffers';
 import imageOffers1 from '../assets/images/offers-1.png';
 import imageOffers2 from '../assets/images/offers-2.png';
@@ -13,6 +12,9 @@ class OffersBody extends Component {
     };
 
     render() {
+
+        const {modalOpen} = this.state;
+
         return (
             <div className="uk-section">
                 <div className="uk-container">
@@ -48,7 +50,7 @@ class OffersBody extends Component {
                         </div>
                     </div>
                 </div>
-                <ModalOffers number={this.state.modalOpen} closeModal={this.closeModal} />
+                <ModalOffers number={modalOpen} closeModal={this.closeModal} />
             </div>
         );
     }
@@ -61,7 +63,5 @@ class OffersBody extends Component {
         this.setState({modalOpen: null})
     }
 }
-
-OffersBody.propTypes = {};
 
 export default OffersBody;

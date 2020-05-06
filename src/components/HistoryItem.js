@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 
 class HistoryItem extends Component {
 
+    static propTypes = {
+        item: PropTypes.object.isRequired
+    };
+
     render() {
         const {item} = this.props;
         const itemClassName = (item.sum < 0) ? 'tm-negative' : 'tm-positive';
@@ -27,7 +31,5 @@ class HistoryItem extends Component {
         );
     }
 }
-
-HistoryItem.propTypes = {};
 
 export default HistoryItem;

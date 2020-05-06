@@ -2,8 +2,17 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import NewsItem from './NewsItem';
 import {connect} from "react-redux";
+import {getNews} from "../selectors";
 
 class NewsList extends Component {
+
+    static propTypes = {
+        type: PropTypes.string,
+        show: PropTypes.number.isRequired,
+        handleClick: PropTypes.func.isRequired,
+        //from connect
+        news: PropTypes.array.isRequired
+    };
 
     render() {
         const {news, type, handleClick, show} = this.props;
@@ -22,8 +31,10 @@ class NewsList extends Component {
     }
 }
 
-NewsList.propTypes = {};
+const mapStateToProps = (state) => {
+    return {
+        news: getNews(state)
+    };
+};
 
-export default connect((state) => ({
-    news: state.news.news
-}), null )(NewsList);
+export default connect(mapStateToProps)(NewsList);

@@ -7,12 +7,22 @@ import BalanceBody from "./BalanceBody";
 import OffersBody from "./OffersBody";
 import InfoBody from "./InfoBody";
 import MapBody from "./MapBody";
+import classNames from "classnames";
+import {getScreen} from "../selectors";
 
 class Screen extends Component {
+
+    static propTypes = {
+        //from connect
+        activeScreen: PropTypes.string.isRequired
+    };
+
     render() {
+        const {activeScreen} = this.props;
+
         return (
-            <div className = {this.props.className}>
-                <ScreenHeader />
+            <div className = {classNames('tm-screen', [`tm-${activeScreen}`])}>
+                <ScreenHeader activeScreen={activeScreen} />
                 {this.getBody()}
             </div>
         );
@@ -20,6 +30,7 @@ class Screen extends Component {
 
     getBody () {
         const {activeScreen} = this.props;
+
         switch (activeScreen) {
             case 'auth':
                 return <AuthBody />;
@@ -35,11 +46,10 @@ class Screen extends Component {
     }
 }
 
-Screen.propTypes = {
-    //from connect
-    activeScreen: PropTypes.string.isRequired
+const mapStateToProps = state => {
+    return {
+        activeScreen: getScreen(state)
+    };
 };
 
-export default connect((state) => ({
-    activeScreen: state.screen
-}), null)(Screen);
+export default connect(mapStateToProps)(Screen);

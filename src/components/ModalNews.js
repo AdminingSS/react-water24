@@ -1,8 +1,17 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from "react-redux";
+import {getNewsItem} from "../selectors";
 
 class ModalNews extends Component {
+
+    static propTypes = {
+        id: PropTypes.number.isRequired,
+        closeModal: PropTypes.func.isRequired,
+        //from connect
+        newsItem: PropTypes.object.isRequired
+    };
+
     render() {
         const {id, closeModal, newsItem} = this.props;
         if (!id) return null;
@@ -31,8 +40,10 @@ class ModalNews extends Component {
     }
 }
 
-ModalNews.propTypes = {};
+const mapStateToProps = (state, ownProps) => {
+    return {
+        newsItem: getNewsItem(state, ownProps)
+    };
+};
 
-export default connect((state, ownProps) => ({
-    newsItem: state.news.news.filter(item => item.id === ownProps.id)[0]
-}), null )(ModalNews);
+export default connect(mapStateToProps)(ModalNews);
