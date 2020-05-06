@@ -1,6 +1,9 @@
 import {SET_LOADER, SET_MESSAGE} from "../constants";
 
 export default store => next => action => {
+
+    next(action);
+
     if(action.type === SET_LOADER || SET_MESSAGE) {
         const eventTime = (action.type === SET_LOADER) ? 3000 : 5000;
         const eventAction = (action.type === SET_LOADER) ? {
@@ -17,5 +20,4 @@ export default store => next => action => {
             store.dispatch(eventAction)
         }, eventTime)
     }
-    next(action);
 }
