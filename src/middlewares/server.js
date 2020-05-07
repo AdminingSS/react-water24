@@ -1,23 +1,31 @@
 import {SET_LOADER, SET_MESSAGE} from "../constants";
+import {setLoader, setMessage} from "../AC";
+
+let loaderTimeout;
+let messageTimeout;
 
 export default store => next => action => {
+    const {type, payload} = action;
+
+    switch(type) {
+        case SET_LOADER:
+            if(payload.shown) {
+                clearTimeout(loaderTimeout);
+                loaderTimeout = setTimeout(() => {
+                    store.dispatch(setLoader(false))
+                }, 3000);
+            }
+            break;
+
+        case SET_MESSAGE:
+            if(payload.active) {
+                clearTimeout(messageTimeout);
+                messageTimeout = setTimeout(() => {
+                    store.dispatch(setMessage(null))
+                }, 5000);
+            }
+            break;
+    }
 
     next(action);
-
-    if(action.type === SET_LOADER || SET_MESSAGE) {
-        const eventTime = (action.type === SET_LOADER) ? 3000 : 5000;
-        const eventAction = (action.type === SET_LOADER) ? {
-                type: SET_LOADER,
-                payload: {shown: false}
-            }
-            :
-            {
-                type: SET_MESSAGE,
-                payload: {active: null, sum: null}
-            };
-
-        setTimeout(() => {
-            store.dispatch(eventAction)
-        }, eventTime)
-    }
 }

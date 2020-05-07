@@ -1,7 +1,7 @@
 import {RESIZE_VIEWPORT} from '../constants';
 
 const viewportDefaultState = {
-    width: window.innerWidth
+    width: document.documentElement.clientWidth
 };
 
 export default ( viewport =  viewportDefaultState, action) => {
